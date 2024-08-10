@@ -28,7 +28,7 @@ sudo apt install -y net-tools  # Network tools including ifconfig
 # Multimedia and Communication
 # Applications for media playback and messaging
 sudo apt install -y vlc               # Multimedia player
-sudo apt install -y telegram-desktop  # Desktop messaging app
+sudo snap install telegram-desktop    # Desktop messaging app
 
 # Development Tools
 # Applications and environments for software development
@@ -45,11 +45,10 @@ sudo apt install -y zsh             # Powerful command-line shell
 # Function to install Google Chrome
 install_google_chrome() {
   # Add Google's official GPG key
-  wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo tee /usr/share/keyrings/google-chrome.gpg
-
+  wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/google-linux-signing-key.gpg > /dev/null
 
   # Add Google Chrome's repository to the sources list
-  echo "deb [signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+  echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
 
   # Update package list and install Google Chrome
   sudo apt update
@@ -58,7 +57,7 @@ install_google_chrome() {
 
 # Function to install Visual Studio Code
 install_vscode() {
-  wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
+  wget -qO- https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc > /dev/null  
   sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
   sudo apt update
   sudo apt install -y code
