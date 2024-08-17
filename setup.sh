@@ -7,6 +7,16 @@
 #Email         	: info@aliabbasi.net
 ###################################################################
 
+# display banner
+echo -e "${YELLOW}******************************************************************************"
+echo -e "${YELLOW}**                                                                          **"
+echo -e "${YELLOW}**                         Install linux utilities                          **"
+echo -e "${YELLOW}**            Automates the installation of essential utilities             **"
+echo -e "${YELLOW}**                                                                          **"
+echo -e "${YELLOW}**                               Ali Abbasi                                 **"
+echo -e "${YELLOW}**                           info@aliabbasi.net                             **"
+echo -e "${YELLOW}******************************************************************************"
+
 # Determine the path to the script_utils.sh
 SCRIPT_UTILS_PATH="submodules/script_utils.sh"
 
