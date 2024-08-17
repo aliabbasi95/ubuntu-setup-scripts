@@ -7,6 +7,17 @@
 #Email         	: info@aliabbasi.net
 ###################################################################
 
+# Determine the path to the script_utils.sh
+SCRIPT_UTILS_PATH="submodules/script_utils.sh"
+
+# Import functions and variables from script_utils.sh if the file exists
+if [ -f "$SCRIPT_UTILS_PATH" ]; then
+    source "$SCRIPT_UTILS_PATH"
+else
+    echo "Error: script_utils.sh not found at $SCRIPT_UTILS_PATH"
+    exit 1
+fi
+
 install_python_utilities() {
   # Install Python utilities
   sudo apt install -y python3-pip       # Python package installer
