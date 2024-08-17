@@ -1,5 +1,12 @@
 #!/bin/bash
 
+###################################################################
+#Script Name    : Install pyhton utilities
+#Description	  : Automates the installation python utilities
+#Author       	: Ali Abbasi
+#Email         	: info@aliabbasi.net
+###################################################################
+
 install_python_utilities() {
   # Install Python utilities
   sudo apt install -y python3-pip       # Python package installer
@@ -10,7 +17,6 @@ install_django() {
   # Install Django
   pip3 install Django==4.2.7            # Specific version of Django
 }
-
 
 # Install all applications and configurations
 install_python_utilities

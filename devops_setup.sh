@@ -1,5 +1,12 @@
 #!/bin/bash
 
+###################################################################
+#Script Name    : Install DevOps utilities
+#Description    : Automates the installation DevOps utilities
+#Author       	: Ali Abbasi
+#Email         	: info@aliabbasi.net
+###################################################################
+
 # DevOps Packages
 # Tools and platforms for DevOps automation and management
 

@@ -1,5 +1,12 @@
 #!/bin/bash
 
+###################################################################
+#Script Name    : Install linux utilities
+#Description	  : Automates the installation of essential utilities
+#Author       	: Ali Abbasi
+#Email         	: info@aliabbasi.net
+###################################################################
+
 # Update and upgrade the system
 # Ensure the system is up-to-date
 sudo apt update && sudo apt upgrade -y
