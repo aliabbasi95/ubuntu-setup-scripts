@@ -1,0 +1,3 @@
+[submodule "submodules/script_utils"]
+	path = submodules/script_utils
+	url = https://github.com/aliabbasi95/script_utils
