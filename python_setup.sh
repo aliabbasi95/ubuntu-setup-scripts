@@ -35,3 +35,30 @@ install_django
 
 # Install PyCharm Community Edition
 sudo snap install pycharm-community --classic # Python IDE
+
+
+print_status "Python setup start..."
+
+install_python_utilities() {
+  # Install Python utilities
+  print_status "Installing Python utilities..."
+  execute_command "sudo apt install -y python3-pip" "Installing pip"              # Python package installer
+  execute_command "sudo apt install -y virtualenv" "Installing python virtualenv" # Virtual environment tool for Python
+}
+
+install_django() {
+  # Install Django
+  print_status "Installing Django..."
+  execute_command "pip3 install Django==4.2.7" "Installing Django"  # Specific version of Django
+}
+
+
+# Install all applications and configurations
+install_python_utilities
+install_django
+
+# Install PyCharm Community Edition
+print_status "Installing pycharm..."
+execute_command "sudo snap install pycharm-community --classic" "Installing pycharm"  # Python IDE
+
+print_success "Python setup completed successfully!"

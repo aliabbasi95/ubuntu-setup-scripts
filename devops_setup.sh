@@ -21,14 +21,18 @@ fi
 # DevOps Packages
 # Tools and platforms for DevOps automation and management
 
+print_status "DevOps tools start..."
+
 # Install Packer
-# Packer is a tool for building identical machine images for multiple platforms.
-sudo apt install -y packer
+print_status "Installing Packer..."
+execute_command "sudo apt install -y packer" "Installing packer"  # Packer is a tool for building identical machine images for multiple platforms.
 
 # Install Vagrant
-# Vagrant is a tool for building and managing virtualized development environments.
-sudo apt install -y vagrant
+print_status "Installing vagrant..."
+execute_command "sudo apt install -y vagrant" "Installing vagrant"  # Vagrant is a tool for building and managing virtualized development environments.
 
 # Install Ansible
-# Ansible is an open-source software provisioning, configuration management, and application-deployment tool.
-sudo apt install -y ansible
+print_status "Installing ansible..."
+execute_command "sudo apt install -y ansible" "Installing packer"  # Ansible is an open-source software provisioning, configuration management, and application-deployment tool.
+
+print_success "DevOps tools setup completed successfully!"
