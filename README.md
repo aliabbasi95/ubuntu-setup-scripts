@@ -14,10 +14,11 @@ This repository contains a shell script designed to quickly set up a fresh Linux
 - Automatically removes unnecessary packages to free up space.
 - Sets up Python utilities.
 - Sets up DevOps packages.
+- Utilizes functions from `script_utils` submodule to streamline command execution and status reporting.
 
 ## Installation
 
-### Prerequisit
+### Prerequisite
 
 - A fresh installation of a Debian-based Linux distribution (e.g., Ubuntu).
 
@@ -26,23 +27,33 @@ This repository contains a shell script designed to quickly set up a fresh Linux
 1. **Clone this repository:**
 
    ```bash
-   git clone https://github.com/aliababsi95/linux-setup-scripts.git
+   git clone --recurse-submodules https://github.com/aliabbasi95/linux-setup-scripts.git
    cd linux-setup-script
+   ```
+
+   **Note:** If you have already cloned the repository without --recurse-submodules, you can initialize and update the submodule with:
+
+   ```bash
+   git submodule update --init --recursive
+   ```
 
 2. **Make the setup script executable:**
 
    ```bash
    chmod +x setup.sh
+   ```
 
 3. **Run the setup script:**
 
    ```bash
    ./setup.sh
+   ```
 
 4. **Reboot the system:**
 
    ```bash
    sudo reboot
+   ```
 
 ## DevOps Setup
 To disable the installation of DevOps packages, you can comment out the following line in setup.sh:
@@ -73,6 +84,24 @@ tty-clock is a simple terminal clock that can be launched with the following com
 
 -c flag centers the clock in the terminal window.
 
+## Submodules
+This repository uses a submodule for utility functions:
+
+### script_utils: 
+
+Contains utility functions for consistent status reporting and command execution.
+
+These functions include:
+1. print_status: Prints a message indicating the start of a command.
+2. print_success: Prints a success message when a command completes successfully.
+3. print_error: Prints an error message when a command fails.
+4. execute_command: Executes a command, uses print_status to indicate the start, and reports success or failure using print_success or print_error.
+
+To ensure the submodule is properly initialized, follow these steps:
+   ```bash
+   git submodule update --init --recursive
+   ```
+
 ## Related Files
 setup.sh: The main installation script.
 
@@ -102,4 +131,4 @@ Open a pull request.
 
 ## Contact
 
-For any inquiries or suggestions, please reach out to info@aliabbasi.net.
+For any questions or comments, please contact [Ali Abbasi](mailto:info@aliabbasi.net).
