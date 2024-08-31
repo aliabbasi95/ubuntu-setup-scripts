@@ -8,7 +8,7 @@
 ###################################################################
 
 # Determine the path to the script_utils.sh
-SCRIPT_UTILS_PATH="submodules/script_utils.sh"
+SCRIPT_UTILS_PATH="submodules/script_utils/script_utils.sh"
 
 # Import functions and variables from script_utils.sh if the file exists
 if [ -f "$SCRIPT_UTILS_PATH" ]; then

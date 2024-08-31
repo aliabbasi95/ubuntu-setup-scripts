@@ -2,12 +2,12 @@
 
 ###################################################################
 #Script Name    : Install linux utilities
-#Description	  : Automates the installation of essential utilities
-#Author       	: Ali Abbasi
-#Email         	: info@aliabbasi.net
+#Description    : Automates the installation of essential utilities
+#Author         : Ali Abbasi
+#Email          : info@aliabbasi.net
 ###################################################################
 
-# display banner
+# Display banner
 echo -e "${YELLOW}******************************************************************************"
 echo -e "${YELLOW}**                                                                          **"
 echo -e "${YELLOW}**                         Install linux utilities                          **"
@@ -18,7 +18,7 @@ echo -e "${YELLOW}**                           info@aliabbasi.net               
 echo -e "${YELLOW}******************************************************************************"
 
 # Determine the path to the script_utils.sh
-SCRIPT_UTILS_PATH="submodules/script_utils.sh"
+SCRIPT_UTILS_PATH="submodules/script_utils/script_utils.sh"
 
 # Import functions and variables from script_utils.sh if the file exists
 if [ -f "$SCRIPT_UTILS_PATH" ]; then
@@ -183,73 +183,72 @@ configure_global_environment() {
     # Define the path for the custom environment file
     CONFIG_FILE=/etc/profile.d/custom.sh
     
-    # Create the custom.sh file for environment variables and aliases
-    execute_command "sudo touch $CONFIG_FILE" "Creating custom.sh"
+    # Create the custom.sh file for environment variables and aliases if it doesn't exist
+    if [ ! -f "$CONFIG_FILE" ]; then
+        execute_command "sudo touch $CONFIG_FILE" "Creating custom.sh"
+    fi
     
     # Set the appropriate permissions for the custom.sh file
     execute_command "sudo chmod 644 $CONFIG_FILE" "Setting permissions for custom.sh"
     
     # Add /usr/local/bin to the PATH variable
-    execute_command "echo 'export PATH=\$PATH:/usr/local/bin' | sudo tee -a $CONFIG_FILE" "Adding /usr/local/bin to PATH"
+    safe_append_to_file 'export PATH=$PATH:/usr/local/bin' "$CONFIG_FILE" "Adding /usr/local/bin to PATH"
     
     # Add system binaries to the PATH variable
-    execute_command "echo 'export PATH=/usr/bin:/bin:/usr/sbin:/sbin:\$PATH' | sudo tee -a $CONFIG_FILE" "Adding system binaries to PATH"
+    safe_append_to_file 'export PATH=/usr/bin:/bin:/usr/sbin:/sbin:$PATH' "$CONFIG_FILE" "Adding system binaries to PATH"
     
     # Create alias for Python 3 as 'py'
-    execute_command "echo 'alias py=python3' | sudo tee -a $CONFIG_FILE" "Adding alias for Python 3"
+    safe_append_to_file 'alias py=python3' "$CONFIG_FILE" "Adding alias for Python 3"
     
     # Create alias for Python 3 as 'python'
-    execute_command "echo 'alias python=python3' | sudo tee -a $CONFIG_FILE" "Adding alias for Python"
+    safe_append_to_file 'alias python=python3' "$CONFIG_FILE" "Adding alias for Python"
     
     # Define the path for local binaries
     LOCAL_BIN_PATH="$HOME/.local/bin"
     
     # Add the LOCAL_BIN_PATH to the PATH variable
-    execute_command "echo "export PATH=\"$LOCAL_BIN_PATH:\$PATH\"" | sudo tee -a $CONFIG_FILE"  "Adding LOCAL_BIN_PATH to environment"
+    safe_append_to_file "export PATH=\"$LOCAL_BIN_PATH:\$PATH\"" "$CONFIG_FILE" "Adding LOCAL_BIN_PATH to environment"
     
     # Source the custom.sh file in .bashrc to load the changes
-    execute_command "echo 'bash -c "source /etc/profile.d/custom.sh"" "Sourcing custom.sh in .bashrc"
+    safe_append_to_file 'source /etc/profile.d/custom.sh' "$HOME/.bashrc" "Sourcing custom.sh in .bashrc"
 }
 
 
 # Configure tmux
 configure_tmux() {
-  local command="cat <<EOT >> ~/.tmux.conf
-set -g mouse on
-bind-key c new-window
-bind-key v split-window -h
-bind-key s split-window -v
-EOT"
-  execute_command "$command" "Update tmux configuration"
+    local tmux_conf="$HOME/.tmux.conf"
+    print_status "Configuring tmux..."
+
+    safe_append_to_file "set -g mouse on" "$tmux_conf" "Enable mouse support in tmux"
+    safe_append_to_file "bind-key c new-window" "$tmux_conf" "Bind 'c' to create a new window in tmux"
+    safe_append_to_file "bind-key v split-window -h" "$tmux_conf" "Bind 'v' to split window horizontally in tmux"
+    safe_append_to_file "bind-key s split-window -v" "$tmux_conf" "Bind 's' to split window vertically in tmux"
 }
 
 # Configure Vim
 configure_vim() {
-  # Configure Vim with line numbers and syntax highlighting
-  print_status "Configuring Vim..."
-  local command="cat <<EOT >> ~/.vimrc
-set number
-syntax on
-EOT"
-  execute_command "$command" "Update Vim configuration"
+    local vimrc="$HOME/.vimrc"
+    print_status "Configuring Vim..."
+
+    safe_append_to_file "set number" "$vimrc" "Enable line numbers in Vim"
+    safe_append_to_file "syntax on" "$vimrc" "Enable syntax highlighting in Vim"
 }
 
 # Configure Oh My Zsh
 configure_oh_my_zsh() {
-  # Add useful plugins to Oh My Zsh configuration
-  print_status "Configuring Oh My Zsh..."
-  local ZSHRC=~/.zshrc
-  local command="{
-      echo 'plugins=(git python vscode postgres docker)'
-      echo 'export PATH=\$PATH:/usr/local/bin'
-      echo 'export PATH=/usr/bin:/bin:/usr/sbin:/sbin:\$PATH'
-      echo 'alias py=python3'
-      echo 'alias python=python3'
-      LOCAL_BIN_PATH=\"\$HOME/.local/bin\"
-      echo \"export PATH=\"\$LOCAL_BIN_PATH:\$PATH\"\"\"
-      chsh -s \$(which zsh)
-  } >> $ZSHRC"
-  execute_command "$command" "Update Oh My Zsh configuration"
+    local ZSHRC="$HOME/.zshrc"
+    print_status "Configuring Oh My Zsh..."
+
+    safe_append_to_file "plugins=(git python vscode postgres docker)" "$ZSHRC" "Adding useful plugins to Oh My Zsh"
+    safe_append_to_file "export PATH=\$PATH:/usr/local/bin" "$ZSHRC" "Adding /usr/local/bin to PATH in zshrc"
+    safe_append_to_file "export PATH=/usr/bin:/bin:/usr/sbin:/sbin:\$PATH" "$ZSHRC" "Adding system binaries to PATH in zshrc"
+    safe_append_to_file "alias py=python3" "$ZSHRC" "Adding alias for Python 3 in zshrc"
+    safe_append_to_file "alias python=python3" "$ZSHRC" "Adding alias for Python in zshrc"
+
+    local LOCAL_BIN_PATH="$HOME/.local/bin"
+    safe_append_to_file "export PATH=\"$LOCAL_BIN_PATH:\$PATH\"" "$ZSHRC" "Adding LOCAL_BIN_PATH to zshrc"
+
+    execute_command "chsh -s $(which zsh)" "Changing shell to zsh"
 }
 
 # Install all applications and configurations
