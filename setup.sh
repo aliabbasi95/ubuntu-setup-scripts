@@ -7,16 +7,6 @@
 #Email          : info@aliabbasi.net
 ###################################################################
 
-# Display banner
-echo -e "${YELLOW}******************************************************************************"
-echo -e "${YELLOW}**                                                                          **"
-echo -e "${YELLOW}**                         Install linux utilities                          **"
-echo -e "${YELLOW}**            Automates the installation of essential utilities             **"
-echo -e "${YELLOW}**                                                                          **"
-echo -e "${YELLOW}**                               Ali Abbasi                                 **"
-echo -e "${YELLOW}**                           info@aliabbasi.net                             **"
-echo -e "${YELLOW}******************************************************************************"
-
 # Determine the path to the script_utils.sh
 SCRIPT_UTILS_PATH="submodules/script_utils/script_utils.sh"
 
@@ -27,6 +17,16 @@ else
     echo "Error: script_utils.sh not found at $SCRIPT_UTILS_PATH"
     exit 1
 fi
+
+# Display banner
+echo -e "${YELLOW}******************************************************************************"
+echo -e "${YELLOW}**                                                                          **"
+echo -e "${YELLOW}**                         Install linux utilities                          **"
+echo -e "${YELLOW}**            Automates the installation of essential utilities             **"
+echo -e "${YELLOW}**                                                                          **"
+echo -e "${YELLOW}**                               Ali Abbasi                                 **"
+echo -e "${YELLOW}**                           info@aliabbasi.net                             **"
+echo -e "${YELLOW}******************************************************************************"
 
 # Update and upgrade the system
 print_status "Update and upgrade the system..."
